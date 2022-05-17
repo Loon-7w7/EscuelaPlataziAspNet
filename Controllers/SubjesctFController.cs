@@ -9,17 +9,22 @@ namespace EscuelaPlatazi.Controllers
 {
     public class SubjesctFController : Controller
     {
-        public IActionResult Index()
+        [Route("SubjesctF/Index/")]
+        [Route("SubjesctF/Index/{SubjectsId}")]
+        public IActionResult Index(string SubjectsId)
         {
-
-
-            return View("Index", _Context.SubjectCS.FirstOrDefault());
+            if (!string.IsNullOrWhiteSpace(SubjectsId))
+            {
+                var ObjectSubject = from subjec in _Context.SubjectCS
+                                    where subjec.Id == SubjectsId
+                                    select subjec;
+                return View("Index", ObjectSubject.SingleOrDefault());
+            }
+            else { return View("MultiSubjesct", _Context.SubjectCS); }
+            
         }
         public IActionResult MultiSubjesct()
         {
-          
-        
-
             return View("MultiSubjesct", _Context.SubjectCS);
         }
 

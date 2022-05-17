@@ -9,11 +9,23 @@ namespace EscuelaPlatazi.Controllers
 {
     public class StudentController : Controller
     {
-        public IActionResult Index()
+        [Route("Student/Index/")]
+        [Route("Student/Index/{StudentId}")]
+        public IActionResult Index(string StudentId)
         {
-            var ObejectSTudents = new Student { Id = Guid.NewGuid().ToString(), Name = "Pepe Perez" };
+            if (!string.IsNullOrWhiteSpace(StudentId))
+            {
+                var ObjectStudent = from Stude in _Context.Students
+                                    where Stude.Id == StudentId
+                                    select Stude;
+                return View("Index", ObjectStudent.SingleOrDefault());
+            }
+            else
+            {
+                return View("MultiStudent", _Context.Students);
 
-            return View("Index",_Context.Students.FirstOrDefault() );
+            }
+
         }
         public IActionResult MultiStudent()
         {
