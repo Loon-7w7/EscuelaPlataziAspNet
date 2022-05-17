@@ -15,6 +15,10 @@ namespace EscuelaPlatazi.Controllers
             objSchool.YearOfCreation = 2005;
             objSchool.UniqueId = Guid.NewGuid().ToString();
             objSchool.Name = "Platzi School";
+            objSchool.Country = "Colombia";
+            objSchool.Town = "Bogota";
+            objSchool.TypeSchool = TypesOfSchool.Highschool;
+            objSchool.AddressSchool = "Avd Simpre Viva";
             return View(objSchool);
         }
     }

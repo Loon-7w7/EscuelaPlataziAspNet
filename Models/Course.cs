@@ -11,7 +11,7 @@ namespace EscuelaPlatazi.Models
         public TypesDay TypeOfDay { get; set; }
 
         public List<SubjectC> ListOfSubjects { get; set; }
-        public List<Alumno> StudentList { get; set; }
+        public List<Student> StudentList { get; set; }
         public string Direcion { get; set; }
 
        

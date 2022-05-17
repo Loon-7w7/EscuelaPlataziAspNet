@@ -8,7 +8,7 @@ namespace EscuelaPlatazi.Models
     public class Evaluations : ObjectSchoolBase
     {
 
-        public Alumno ObjectStudent { get; set; }
+        public Student ObjectStudent { get; set; }
         public SubjectC ObjectSubject { get; set; }
         public float Calificacion { get; set; }
 
