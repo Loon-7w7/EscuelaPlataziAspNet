@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EscuelaPlatazi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EscuelaPlatazi.Controllers
 {
@@ -12,22 +13,12 @@ namespace EscuelaPlatazi.Controllers
 
         [Route("Course/Index/")]
         [Route("Course/Index/{StudentId}")]
-        public IActionResult Index(string CourseId)
+        public async Task<IActionResult> Index()
         {
-            if (!string.IsNullOrWhiteSpace(CourseId))
-            {
-                var ObjectCourse = from Cour in _Context.Courses
-                                    where Cour.Id == CourseId
-                                    select Cour;
-                return View("Index", ObjectCourse.SingleOrDefault());
-            }
-            else
-            {
-                return View("MultiCourse", _Context.Courses);
-
-            }
-
+            var courses = _Context.Courses.Include(c => c.school);
+            return View(await courses.ToListAsync());
         }
+
         public IActionResult MultiCourse()
         {
             return View("MultiCourse", _Context.Courses);

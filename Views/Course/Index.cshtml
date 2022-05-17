@@ -1,4 +1,4 @@
-﻿@model Course
+﻿@model IEnumerable<Course>
 @{
     ViewData["Title"] = "Course Information";
     Layout = "Simple";
@@ -7,11 +7,49 @@
 <h1>@ViewData["Title"]</h1>
 
 <strong>Create New</strong>
-<p>
-    Id: @Model.Id; <br />
-    Name: @Model.Name
-</p>
+<table class="table table-hover table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOfDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.school)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td scope="row">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.school.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <strong>Desde la vista Parcial</strong>
 <partial name="ObejectSchoolSimple" />
-
