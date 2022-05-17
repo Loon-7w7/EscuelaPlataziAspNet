@@ -7,8 +7,9 @@ namespace EscuelaPlatazi.Models
     public class Student : ObjectSchoolBase
     {
 
-        public List<Evaluations> ListEvaluations { get; set; } = new List<Evaluations>();
-
+        public List<Evaluations> ListEvaluations { get; set; }
+        public string CourseId { get; set; }
+        public Course course { get; set; }
     }
 }
 

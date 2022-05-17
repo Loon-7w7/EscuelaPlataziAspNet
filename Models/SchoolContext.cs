@@ -19,7 +19,7 @@ namespace EscuelaPlatazi.Models
         {
 
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             var objSchool = new School();
@@ -30,20 +30,42 @@ namespace EscuelaPlatazi.Models
             objSchool.Town = "Bogota";
             objSchool.TypeSchool = TypesOfSchool.Highschool;
             objSchool.AddressSchool = "Avd Simpre Viva";
+            //Cargar cursos de la Escuela
+            var Objectcourses = uploadCourses(objSchool);
+            //x cada curso cargar asignaturas
+            var objectSubject = LoadSubjects(Objectcourses);
+            //x cada curso cargar alunmos
+            var ObjetStudent = LoadStudent(Objectcourses);
+
             modelBuilder.Entity<School>().HasData(objSchool);
+            modelBuilder.Entity<Course>().HasData(Objectcourses.ToArray());
+            modelBuilder.Entity<SubjectC>().HasData(objectSubject.ToArray());
+            modelBuilder.Entity<Student>().HasData(ObjetStudent.ToArray());
 
-            modelBuilder.Entity<SubjectC>().HasData(
-                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Math" },
-                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Physical Education" },
-                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Castilian" },
-                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Natural Sciences" }
-                );
-
-            modelBuilder.Entity<Student>().HasData(GenerateRandomStudents().ToArray());
         }
 
-        private List<Student> GenerateRandomStudents()
+        private static List<SubjectC> LoadSubjects(List<Course> courses)
         {
+            var SubjectsList = new List<SubjectC>();
+            foreach (var itemCurso in courses)
+            {
+                var TmpListe = new List<SubjectC>()
+                {
+                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Math" , CourseId = itemCurso.Id },
+                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Physical Education", CourseId = itemCurso.Id},
+                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Castilian", CourseId = itemCurso.Id},
+                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Natural Sciences", CourseId = itemCurso.Id}
+                };
+
+                SubjectsList.AddRange(TmpListe);
+                //itemCurso.ListOfSubjects = TmpListe;
+            }
+            return SubjectsList;
+        }
+
+        private List<Student> GenerateRandomStudents(int Amount , Course ObjectCourse)
+        {
+
             string[] PrimerNombre = { "Alba", "Felipa", "Eusebio", "Farid", "Donald", "Alvaro", "Nicolás" };
             string[] ApeliidoPaterno = { "Ruiz", "Sarmiento", "Uribe", "Maduro", "Trump", "Toledo", "Herrera" };
             string[] SegundoNombre = { "Freddy", "Anabel", "Rick", "Murty", "Silvana", "Diomedes", "Nicomedes", "Teodoro" };
@@ -53,10 +75,37 @@ namespace EscuelaPlatazi.Models
                                  from Apellido in ApeliidoPaterno
                                  select new Student
                                  {
+                                     CourseId = ObjectCourse.Id,
                                      Name = $"{Nombre1} {Nombre2} {Apellido}",
                                      Id = Guid.NewGuid().ToString()
                                  };
-            return ListadeAlunnos.OrderBy((Alum) => Alum.Id).ToList();
+            return ListadeAlunnos.OrderBy((Alum) => Alum.Id).Take(Amount).ToList();
+        }
+        private static List<Course> uploadCourses(School objSchool)
+        {
+            return  new List<Course>()
+            {
+                new Course(){Id=Guid.NewGuid().ToString(),SchoolId = objSchool.Id ,Name ="101", TypeOfDay = TypesDay.Morning },
+                new Course(){Id=Guid.NewGuid().ToString(),SchoolId = objSchool.Id ,Name ="201", TypeOfDay = TypesDay.Morning },
+                new Course(){Id=Guid.NewGuid().ToString(),SchoolId = objSchool.Id ,Name ="301", TypeOfDay = TypesDay.Morning },
+                new Course(){Id=Guid.NewGuid().ToString(),SchoolId = objSchool.Id ,Name ="401", TypeOfDay = TypesDay.Afternoon },
+                new Course(){Id=Guid.NewGuid().ToString(),SchoolId = objSchool.Id ,Name ="501", TypeOfDay = TypesDay.Afternoon },
+
+            };
+            
+        }
+
+        private List<Student> LoadStudent(List<Course> CourseList) 
+        {
+            var StudentList = new List<Student>();
+            Random RND = new Random();
+            foreach (var itemCourse in CourseList)
+            {
+                int randomamount = RND.Next(5, 20);
+                var tempList = GenerateRandomStudents(randomamount, itemCourse);
+                StudentList.AddRange(tempList);
+            }
+            return StudentList;
         }
     }
 }

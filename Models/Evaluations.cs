@@ -9,7 +9,9 @@ namespace EscuelaPlatazi.Models
     {
 
         public Student ObjectStudent { get; set; }
+        public string StudentId { get; set; }
         public SubjectC ObjectSubject { get; set; }
+        public string SubjectsCId { get; set; }
         public float Calificacion { get; set; }
 
 

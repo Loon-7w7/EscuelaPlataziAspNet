@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EscuelaPlatazi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EscuelaPlatazi.Controllers
 {
@@ -12,14 +13,6 @@ namespace EscuelaPlatazi.Controllers
         private SchoolContext _Context;
         public IActionResult Index() 
         {
-            //var objSchool = new School();
-            //objSchool.YearOfCreation = 2005;
-            //objSchool.Id = Guid.NewGuid().ToString();
-            //objSchool.Name = "Platzi School";
-            //objSchool.Country = "Colombia";
-            //objSchool.Town = "Bogota";
-            //objSchool.TypeSchool = TypesOfSchool.Highschool;
-            //objSchool.AddressSchool = "Avd Simpre Viva";
             var objSchool = _Context.Schools.FirstOrDefault();
             return View(objSchool);
         }

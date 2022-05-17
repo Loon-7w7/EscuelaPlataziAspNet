@@ -11,21 +11,23 @@ namespace EscuelaPlatazi.Controllers
     {
         public IActionResult Index()
         {
-            var ObejectSubjesct = new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Math" };
 
-            return View("Index", ObejectSubjesct);
+
+            return View("Index", _Context.SubjectCS.FirstOrDefault());
         }
         public IActionResult MultiSubjesct()
         {
-            var ListSubjesct = new List<SubjectC>() { 
-                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Math" },
-                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Physical Education" },
-                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Castilian" },
-                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Natural Sciences" }
-            };
+          
         
 
-            return View("MultiSubjesct", ListSubjesct);
+            return View("MultiSubjesct", _Context.SubjectCS);
+        }
+
+
+        private SchoolContext _Context;
+        public SubjesctFController(SchoolContext Context)
+        {
+            _Context = Context;
         }
     }
 }

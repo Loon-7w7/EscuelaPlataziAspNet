@@ -13,7 +13,8 @@ namespace EscuelaPlatazi.Models
         public List<SubjectC> ListOfSubjects { get; set; }
         public List<Student> StudentList { get; set; }
         public string Direcion { get; set; }
+        public string SchoolId { get; set; }
+        public School school { get; set; }
 
-       
     }
 }
