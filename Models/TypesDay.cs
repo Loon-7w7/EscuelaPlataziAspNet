@@ -7,7 +7,6 @@ namespace EscuelaPlatazi.Models
 {
     public enum TypesDay
     {
-
         Morning,
         Afternoon,
         Evening

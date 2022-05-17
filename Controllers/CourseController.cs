@@ -9,6 +9,7 @@ namespace EscuelaPlatazi.Controllers
 {
     public class CourseController : Controller
     {
+
         [Route("Course/Index/")]
         [Route("Course/Index/{StudentId}")]
         public IActionResult Index(string CourseId)
@@ -31,6 +32,25 @@ namespace EscuelaPlatazi.Controllers
         {
             return View("MultiCourse", _Context.Courses);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Course objectCourse)
+        {
+            var ObjectSchool = _Context.Schools.FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                objectCourse.SchoolId = ObjectSchool.Id;
+                _Context.Courses.Add(objectCourse);
+                _Context.SaveChanges();
+                return View("Index", objectCourse);
+            }
+            else { return View(objectCourse); }
+            
+        }
 
         private SchoolContext _Context;
         public CourseController(SchoolContext Context)
@@ -38,5 +58,7 @@ namespace EscuelaPlatazi.Controllers
             _Context = Context;
         }
       
+
+
     }
 }

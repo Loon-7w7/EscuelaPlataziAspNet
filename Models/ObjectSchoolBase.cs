@@ -7,7 +7,7 @@ namespace EscuelaPlatazi.Models
     public abstract class ObjectSchoolBase
     {
         public string Id { get; set; }
-        public String Name { get; set; }
+        public virtual String Name { get; set; }
 
         public ObjectSchoolBase()
         {
