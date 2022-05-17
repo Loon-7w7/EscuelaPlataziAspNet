@@ -11,7 +11,7 @@ namespace EscuelaPlatazi.Controllers
     {
         public IActionResult Index()
         {
-            var ObejectSTudents = new Student { UniqueId = Guid.NewGuid().ToString(), Name = "Pepe Perez" };
+            var ObejectSTudents = new Student { Id = Guid.NewGuid().ToString(), Name = "Pepe Perez" };
 
             return View("Index", ObejectSTudents);
         }
@@ -33,9 +33,9 @@ namespace EscuelaPlatazi.Controllers
                                  from Nombre2 in SegundoNombre
                                  from Apellido in ApeliidoPaterno
                                  select new Student { Name = $"{Nombre1} {Nombre2} {Apellido}",
-                                     UniqueId = Guid.NewGuid().ToString()
+                                     Id = Guid.NewGuid().ToString()
                                  };
-            return ListadeAlunnos.OrderBy((Alum) => Alum.UniqueId).ToList();
+            return ListadeAlunnos.OrderBy((Alum) => Alum.Id).ToList();
         }
     }
 }

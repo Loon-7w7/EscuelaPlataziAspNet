@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using EscuelaPlatazi.Models;
 
 namespace EscuelaPlatazi
 {
@@ -13,7 +15,23 @@ namespace EscuelaPlatazi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var Host = CreateHostBuilder(args).Build();
+
+            using (var Scope = Host.Services.CreateScope()) 
+            {
+                var Services = Scope.ServiceProvider;
+                try
+                {
+                    var Context = Services.GetRequiredService<SchoolContext>();
+                    Context.Database.EnsureCreated();
+                }
+                catch (Exception ex)
+                {
+                    var logger = Services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Ocurrio un error");
+                }
+                Host.Run();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -6,7 +6,7 @@ namespace EscuelaPlatazi.Models
 {
     public abstract class ObjectSchoolBase
     {
-        public string UniqueId { get; set; }
+        public string Id { get; set; }
         public String Name { get; set; }
 
         public ObjectSchoolBase()
@@ -16,7 +16,7 @@ namespace EscuelaPlatazi.Models
 
         public override string ToString()
         {
-            return $"{Name} {UniqueId}";
+            return $"{Name} {Id}";
         }
     }
 }

@@ -16,7 +16,7 @@ namespace EscuelaPlatazi.Models
         public string AddressSchool { get; set; }
         public TypesOfSchool TypeSchool { get; set; }
         public List<Course> CourseList { get; set; }
-        public string Direcion { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        //public string Direcion { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //public School(string Name, int YearOfCreation) => (this.Name, this.YearOfCreation) = (Name, YearOfCreation);
 

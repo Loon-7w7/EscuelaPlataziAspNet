@@ -11,17 +11,17 @@ namespace EscuelaPlatazi.Controllers
     {
         public IActionResult Index()
         {
-            var ObejectSubjesct = new SubjectC { UniqueId = Guid.NewGuid().ToString(), Name = "Math" };
+            var ObejectSubjesct = new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Math" };
 
             return View("Index", ObejectSubjesct);
         }
         public IActionResult MultiSubjesct()
         {
             var ListSubjesct = new List<SubjectC>() { 
-                new SubjectC { UniqueId = Guid.NewGuid().ToString(), Name = "Math" },
-                new SubjectC { UniqueId = Guid.NewGuid().ToString(), Name = "Physical Education" },
-                new SubjectC { UniqueId = Guid.NewGuid().ToString(), Name = "Castilian" },
-                new SubjectC { UniqueId = Guid.NewGuid().ToString(), Name = "Natural Sciences" }
+                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Math" },
+                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Physical Education" },
+                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Castilian" },
+                new SubjectC { Id = Guid.NewGuid().ToString(), Name = "Natural Sciences" }
             };
         
 
